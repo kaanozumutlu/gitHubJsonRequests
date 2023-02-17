@@ -1,0 +1,66 @@
+import requests
+import json
+
+class gitHub:
+    def __init__(self):
+        self.api_url="https://api.github.com"
+        self.token="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"
+    def getUser(self,username):
+        response=requests.get(self.api_url+"\users\" +username)
+        return response.json
+    def getRepositories(self,username):
+        response=requests.getattr(self.api_url+'\users\'+username+'repos\')
+        return response.json
+    def createRepositories(self,name):
+        requests.post(self.api_url+'\user\repos?access_token=' +self.token+json={
+  "id": 1296269,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMjk2MjY5",
+  "name": "Hello-World",
+  "full_name": "octocat/Hello-World",
+  "owner": {
+    "login": "octocat",
+    "id": 1,
+    "node_id": "MDQ6VXNlcjE=",
+    "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/octocat",
+    "html_url": "https://github.com/octocat",
+    "followers_url": "https://api.github.com/users/octocat/followers",
+    "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+    "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+    "organizations_url": "https://api.github.com/users/octocat/orgs",
+    "repos_url": "https://api.github.com/users/octocat/repos",
+    "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/octocat/received_events",
+    "type": "User",
+    "site_admin": false
+  },)
+
+github= gitHub()
+
+print("Menu".center)
+
+secim=input("1- Find User\n2- Get Repositories\n3- Create Repositories\n4- Exit\nChoice: ")
+
+while True:
+    if secim==4:
+        print("Exit")
+        break
+    else:
+        if secim==1:
+            username=input("enter the username: ")
+            result=gitHub.getUser(username)
+            print(f"name: {result['name']} public repos: {result['public_repos']} followers: {result['followers']}")
+        elif secim==2:
+            username=input("enter the username: ")
+            result=gitHub.getRepositories(username)
+            for repo in result:
+                print(repo['name'])
+        elif secim==3:
+            name=input("repo name= ")
+            result=gitHub.createRepositories(name)
+            print(result)
+        else:
+            print("Wrong choice has been choosed")
